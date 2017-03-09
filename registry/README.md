@@ -1,0 +1,4 @@
+## build image
+
+./gradlew buildImage
+

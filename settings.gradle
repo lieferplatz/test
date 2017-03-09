@@ -1,0 +1,6 @@
+rootProject.name = 'lieferplatz-test'
+
+include 'registry' 
+include 'mandants'
+include 'products'
+

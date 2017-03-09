@@ -1,0 +1,114 @@
+#!groovy
+
+buildscript {
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "com.bmuschko:gradle-docker-plugin:${gradleDockerPluginVersion}"
+        classpath 'org.apache.commons:commons-lang3:3.3.2'
+    }
+
+}
+
+apply plugin: com.bmuschko.gradle.docker.DockerRemoteApiPlugin
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import org.apache.commons.lang3.StringEscapeUtils
+
+configurations.create("worker-${project.name}")
+configurations."worker-${project.name}".transitive = false
+
+ext {
+    workerDir = "$buildDir/worker"
+}
+
+docker {
+
+    if (System.env.DOCKER_HOST) {
+        url = "$System.env.DOCKER_HOST".replace("tcp","https")
+        if (System.env.DOCKER_CERT_PATH) {
+            certPath = file(System.env.DOCKER_CERT_PATH)
+        }
+    } else {
+        url = 'unix:///var/run/docker.sock'
+    }
+
+    registryCredentials {
+        url = 'https://index.docker.io/v1'
+        username = 'n0mer'
+        password = dockerHubPassword
+        email = 'nikolay@gorylenko.com'
+    }
+
+    url = "unix:///var/run/docker.sock"
+}
+
+task resolveWorker(type: Copy) {
+    description "fetch artifacts for Docker image into [$workerDir]"
+    from configurations."worker-${project.name}"
+    into workerDir
+}
+
+task createDockerfile(type: Dockerfile) {
+
+    //sample https://github.com/bmuschko/gradle-docker-plugin/blob/master/src/functTest/groovy/com/bmuschko/gradle/docker/tasks/image/DockerfileFunctionalTest.groovy
+    //sample https://github.com/bmuschko/gradle-docker-plugin/blob/master/src/test/groovy/com/bmuschko/gradle/docker/tasks/image/DockerfileTest.groovy
+
+    destFile = project.file("${workerDir}/Dockerfile")
+    from 'java:8-jre-alpine'
+    maintainer 'github.com/n0mer'
+
+    label ([
+            'de.lieferplatz.build.by'                : System.getProperty('user.name'),
+            'de.lieferplatz.build.at'                : sdf.format(new Date()),
+            'de.lieferplatz.build.at.timezone'       : System.getProperty('user.timezone'),
+            'de.lieferplatz.build.jdk'               : Runtime.class.package.implementationVersion,
+            'de.lieferplatz.build.host'              : InetAddress.getLocalHost(),
+            'de.lieferplatz.build.host.canonical'    : InetAddress.getLocalHost().getCanonicalHostName(),
+            'de.lieferplatz.app.name'                : project.name,
+            'de.lieferplatz.app.group'               : project.group,
+            'de.lieferplatz.app.version'             : project.version,
+            'de.lieferplatz.app.description'         : project.description,
+            'de.lieferplatz.git.branch'              : gitRepo.branch.current.name,
+            'de.lieferplatz.git.commit.id'           : gitRepo.head().id,
+            'de.lieferplatz.git.commit.id.abbrev'    : gitRepo.head().abbreviatedId,
+            'de.lieferplatz.git.commit.user.name'    : gitRepo.head().author.name,
+            'de.lieferplatz.git.commit.user.email'   : gitRepo.head().author.email,
+            'de.lieferplatz.git.commit.message.short': StringEscapeUtils.escapeJava(gitRepo.head().shortMessage),
+//            'io.lifetracker.git.commit.message.full' : gitRepo.head().fullMessage,
+            'de.lieferplatz.git.commit.time'         : sdf.format(new Date(gitRepo.head().time * 1000L))
+    ])
+
+    copyFile "${jar.baseName}-${project.version}.jar", '/app.jar'
+//    exposePort 8280
+
+
+    environmentVariable 'AWS_ACCESS_KEY_ID', iamAccessKey
+    environmentVariable 'AWS_SECRET_ACCESS_KEY', iamSecretKey
+
+    defaultCommand (
+            'java',
+            '-jar',
+            '/app.jar'
+    )
+
+}
+
+task buildImage(type: DockerBuildImage, dependsOn: ['assemble', 'resolveWorker', 'createDockerfile']) {
+    inputDir = createDockerfile.destFile.parentFile
+    tag = "n0mer/lieferplatz:${jar.baseName}-dev"
+    doFirst {
+        println "docker api url = [${docker.url}]"
+        if (docker.certPath) {
+            println "docker cert path = [${docker.certPath}]"
+        }
+    }
+}
+
+dependencies {
+    "worker-${project.name}" "${project.group}:${jar.baseName}:${project.version}"
+}

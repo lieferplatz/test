@@ -1,0 +1,2 @@
+*.png   diff=exif
+.bat    text eol=crlf
