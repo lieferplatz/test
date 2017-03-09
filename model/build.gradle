@@ -1,0 +1,19 @@
+#!groovy
+
+version     = moduleVersion[jar.baseName]
+group       = 'de.lieferplatz'
+description = 'data model'
+
+
+dependencies {
+
+    compile 'io.swagger:swagger-annotations'
+
+    compile 'org.springframework:spring-orm'
+    compile 'org.springframework.data:spring-data-jpa'
+    compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
+    compile 'org.hibernate:hibernate-validator'
+    compile 'org.hibernate:hibernate-core'
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}

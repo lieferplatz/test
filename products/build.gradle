@@ -1,0 +1,28 @@
+#!groovy
+
+version     = moduleVersion[jar.baseName]
+group       = 'de.lieferplatz'
+description = 'products service'
+
+apply from: "$rootDir/gradle/docker-jar.gradle"
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+
+    compile project(":model")
+
+    compile('org.springframework.cloud:spring-cloud-starter-eureka')
+    compile('org.springframework.boot:spring-boot-starter-web')
+
+    compile ('org.springframework.boot:spring-boot-starter-data-jpa') {
+        exclude group: 'org.slf4j', module: 'log4j-over-slf4j'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+
+    compile("com.h2database:h2")
+
+    compile 'io.swagger:swagger-annotations'
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+
+}

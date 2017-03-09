@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <logger name="io.lifetracker" level="DEBUG"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.apache.zookeeper" level="WARN"/>
+    <logger name="org.I0Itec" level="WARN"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- Log message format -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <jmxConfigurator/>
+
+</configuration>

@@ -11,12 +11,7 @@ dependencies {
 
     compile('org.springframework.cloud:spring-cloud-starter-eureka-server')
 
-    compile 'org.springframework:spring-orm'
-    compile 'org.springframework.data:spring-data-jpa'
     compile 'io.swagger:swagger-annotations'
-    compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
-    compile 'org.hibernate:hibernate-validator'
-    compile 'org.hibernate:hibernate-core'
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 

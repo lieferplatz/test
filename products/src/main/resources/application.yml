@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: "products"
+  datasource:
+    data: "classpath:/seed/h2-seed-data.sql"
+    driverClassName: "org.h2.Driver"
+    url: "jdbc:h2:mem:web;DB_CLOSE_ON_EXIT=FALSE"
+    validation-query: "SELECT 1"
+    test-on-borrow: true
+    test-on-return: true
+    test-while-idle: true
+    time-between-eviction-runs-millis: 3600
+    min-evictable-idle-time-millis: 3600
+  jpa:
+    show-sql: false
+    generate-ddl: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL57InnoDBDialect
+  data.jpa.repositories:
+    enabled: true
+  h2.console.enabled: false
