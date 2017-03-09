@@ -86,10 +86,6 @@ task createDockerfile(type: Dockerfile) {
     copyFile "${jar.baseName}-${project.version}.jar", '/app.jar'
 //    exposePort 8280
 
-
-    environmentVariable 'AWS_ACCESS_KEY_ID', iamAccessKey
-    environmentVariable 'AWS_SECRET_ACCESS_KEY', iamSecretKey
-
     defaultCommand (
             'java',
             '-jar',

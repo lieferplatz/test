@@ -1,10 +1,10 @@
 spring:
   application:
-    name: "products"
+    name: "mandants"
   datasource:
     data: "classpath:/seed/h2-seed-data.sql"
     driverClassName: "org.h2.Driver"
-    url: "jdbc:h2:mem:products;DB_CLOSE_ON_EXIT=FALSE"
+    url: "jdbc:h2:mem:mandants;DB_CLOSE_ON_EXIT=FALSE"
     validation-query: "SELECT 1"
     test-on-borrow: true
     test-on-return: true
@@ -16,4 +16,4 @@ spring:
     generate-ddl: true
   data.jpa.repositories:
     enabled: true
-  h2.console.enabled: false
+  h2.console.enabled: true

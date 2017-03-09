@@ -1,0 +1,1 @@
+INSERT INTO mandants (mandant_id, name) VALUES (1, 'mandant-1');

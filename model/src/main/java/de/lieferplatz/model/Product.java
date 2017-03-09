@@ -51,6 +51,7 @@ public class Product implements Serializable {
     @Column(name = "mandant_id")
     private Long mandantId;
 
+    @Column(name = "text")
     private String text;
 
     public Product() {

@@ -48,6 +48,7 @@ public class Mandant implements Serializable {
     @Column(name = "last_modified_at", length = 3)
     private LocalDateTime lastModifiedAt;
 
+    @Column(name = "name")
     private String name;
 
     public Mandant() {
