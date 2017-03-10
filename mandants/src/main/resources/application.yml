@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: "mandants"
   datasource:
     data: "classpath:/seed/h2-seed-data.sql"
     driverClassName: "org.h2.Driver"
@@ -17,3 +15,11 @@ spring:
   data.jpa.repositories:
     enabled: true
   h2.console.enabled: true
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://registry:8761/eureka/

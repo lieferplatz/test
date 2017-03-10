@@ -1,14 +1,10 @@
-spring:
-  application:
-    name: "registry"
-
 server:
-  port: 8761
+  port: ${PORT:8761}
 
 eureka:
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    registerWithEureka: false
+    fetchRegistry: false
 
 logging:
   level:

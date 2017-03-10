@@ -1,1 +1,1 @@
-INSERT INTO products (mandant_id, text) VALUES (1, 'product-1');
+INSERT INTO products (product_id, mandant_id, text) VALUES (0, 1, 'product-1');

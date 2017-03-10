@@ -1,0 +1,31 @@
+registry:
+  image: n0mer/lieferplatz:registry-dev
+  container_name: lieferplatz_registry
+#  log_driver: syslog
+  labels:
+    de.lieferplatz.test.component: 'registry'
+  ports:
+    - "8761:8761"
+  restart: always
+products:
+  image: n0mer/lieferplatz:products-dev
+  container_name: lieferplatz_products
+#  log_driver: syslog
+  labels:
+    de.lieferplatz.test.component: 'products'
+  ports:
+    - "8081:8080"
+  restart: always
+  links:
+    - registry
+mandants:
+  image: n0mer/lieferplatz:mandants-dev
+  container_name: lieferplatz_mandants
+#  log_driver: syslog
+  labels:
+    de.lieferplatz.test.component: 'mandants'
+  ports:
+    - "8082:8080"
+  restart: always
+  links:
+    - registry

@@ -3,7 +3,7 @@
 
     <logger name="de.lieferplatz" level="DEBUG"/>
     <logger name="org.springframework" level="INFO"/>
-    <logger name="org.hibernate" level="DEBUG"/>
+    <logger name="org.hibernate" level="INFO"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- Log message format -->
@@ -13,7 +13,7 @@
         </encoder>
     </appender>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
 

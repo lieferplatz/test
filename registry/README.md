@@ -1,4 +1,0 @@
-## build image
-
-./gradlew buildImage
-
