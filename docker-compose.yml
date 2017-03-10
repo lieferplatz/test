@@ -29,3 +29,14 @@ mandants:
   restart: always
   links:
     - registry
+proxy:
+  image: n0mer/lieferplatz:proxy-dev
+  container_name: lieferplatz_proxy
+  labels:
+    de.lieferplatz.test.component: 'proxy'
+  ports:
+    - "8080:8080"
+  links:
+      - registry
+      - mandants
+      - products

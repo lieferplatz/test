@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <logger name="de.lieferplatz.products" level="DEBUG"/>
+    <logger name="de.lieferplatz.registry" level="DEBUG"/>
     <logger name="org.springframework" level="INFO"/>
+    <logger name="com.netflix.discovery" level="OFF"/>
+    <logger name="com.netflix.eureka" level="OFF"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- Log message format -->

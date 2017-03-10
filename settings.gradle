@@ -4,4 +4,5 @@ include 'registry'
 include 'mandants'
 include 'products'
 include 'model'
+include 'proxy'
 

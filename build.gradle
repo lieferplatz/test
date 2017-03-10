@@ -124,6 +124,7 @@ configure(subprojects) { project ->
         moduleVersion = [
 
                 //core
+                'proxy'                 : '0.0.1.BUILD-SNAPSHOT',
                 'model'                 : '0.0.1.BUILD-SNAPSHOT',
                 'registry'              : '0.0.1.BUILD-SNAPSHOT',
                 'mandants'              : '0.0.1.BUILD-SNAPSHOT',
@@ -140,7 +141,7 @@ configure(subprojects) { project ->
 
         compile 'org.slf4j:slf4j-api'
         compile 'com.google.guava:guava'
-//        compile 'org.apache.commons:commons-lang3'
+        compile 'org.apache.commons:commons-lang3'
 
         compile 'org.apache.commons:commons-math3:3.6'
         compile 'org.easytesting:fest-assert-core'

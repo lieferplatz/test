@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <logger name="de.lieferplatz.products" level="DEBUG"/>
+    <logger name="de.lieferplatz.proxy" level="DEBUG"/>
     <logger name="org.springframework" level="INFO"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
